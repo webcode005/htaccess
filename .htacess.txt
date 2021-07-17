@@ -1,0 +1,31 @@
+RewriteEngine On 
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Canonical https/www
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	
+	RewriteCond %{HTTP_HOST} !^www\. [NC]
+	RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+RewriteRule ^webinar/([a-zA-Z0-9_-]+)$ webinar.php?url=$1
+
+RewriteRule ^product/([a-zA-Z0-9_-]+)$ product.php?url=$1
+
+RewriteRule ^product/([a-zA-Z0-9_-]+)/msg/([a-zA-Z0-9_-\s]+)$ product.php?url=$1&msg=$2
+
+RewriteRule ^product11/([a-zA-Z0-9_-]+)$ product11.php?url=$1
+
+RewriteRule ^([a-zA-Z0-9_-\s]+)/classroom/([a-zA-Z0-9_-\s]+)$ cenroll.php?course=$1&country=$2 [QSA,L]
+
+RewriteRule ^lvc/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ lvc.php?country=$1&course=$2
+
+RewriteRule ^([a-zA-Z0-9_-]+)/LVC/([a-zA-Z0-9_-]+)$ lvclocation.php?course=$1&city=$2
+
+RewriteRule ^([a-zA-Z0-9_-]+)/LVC$ lvcs.php?course=$1
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
