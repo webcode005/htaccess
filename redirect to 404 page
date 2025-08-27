@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# 1️⃣ Product URL rewrite (this must come first)
+RewriteRule ^product/([a-zA-Z0-9_-]+)$ product.php?url=$1 [L,QSA]
+
+# 2️⃣ If the requested file or directory does not exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 3️⃣ Redirect everything else to 404
+RewriteRule ^.*$ /404.php [L]
+
+# 4️⃣ Define custom 404 page
+ErrorDocument 404 /404.php
